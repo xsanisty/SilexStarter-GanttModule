@@ -14,12 +14,13 @@ class CreateGanttMemberTable extends Migration
         $this->schema->create(
             'gantt_members',
             function ($table) {
-                $table->unsignedInteger('gantt_id');
+                $table->unsignedInteger('chart_id');
                 $table->unsignedInteger('user_id');
+                $table->text('permissions');
 
-                $table->foreign('gantt_id')
+                $table->foreign('chart_id')
                       ->references('id')
-                      ->on('gantts')
+                      ->on('gantt_charts')
                       ->onDelete('cascade');
 
                 $table->foreign('user_id')
@@ -28,7 +29,7 @@ class CreateGanttMemberTable extends Migration
                       ->onDelete('cascade');
 
                 $table->engine = 'InnoDB';
-                $table->primary(['gantt_id', 'user_id']);
+                $table->primary(['chart_id', 'user_id']);
             }
         );
     }
@@ -42,7 +43,7 @@ class CreateGanttMemberTable extends Migration
             $this->schema->table(
                 'gantt_members',
                 function ($table) {
-                    $table->dropForeign('gantt_members_gantt_id_foreign');
+                    $table->dropForeign('gantt_members_chart_id_foreign');
                 }
             );
         } catch (\Exception $e) {

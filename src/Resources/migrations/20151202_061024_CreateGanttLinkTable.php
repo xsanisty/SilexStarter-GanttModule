@@ -15,9 +15,15 @@ class CreateGanttLinkTable extends Migration
             'gantt_links',
             function ($table) {
                 $table->increments('id');
+                $table->unsignedInteger('chart_id');
                 $table->unsignedInteger('source');
                 $table->unsignedInteger('target');
                 $table->string('type');
+
+                $table->foreign('chart_id')
+                      ->references('id')
+                      ->on('gantt_charts')
+                      ->onDelete('cascade');
 
                 $table->foreign('source')
                       ->references('id')
@@ -46,6 +52,7 @@ class CreateGanttLinkTable extends Migration
                 function ($table) {
                     $table->dropForeign('gantt_links_target_foreign');
                     $table->dropForeign('gantt_links_source_foreign');
+                    $table->dropForeign('gantt_links_chart_id_foreign');
                 }
             );
         } catch (\Exception $e) {

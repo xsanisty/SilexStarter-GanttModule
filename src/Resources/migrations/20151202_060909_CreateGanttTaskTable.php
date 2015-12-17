@@ -15,7 +15,7 @@ class CreateGanttTaskTable extends Migration
             'gantt_tasks',
             function ($table) {
                 $table->increments('id');
-                $table->unsignedInteger('gantt_id');
+                $table->unsignedInteger('chart_id');
                 $table->dateTime('date_start');
                 $table->string('text');
                 $table->float('progress');
@@ -24,9 +24,9 @@ class CreateGanttTaskTable extends Migration
                 $table->unsignedInteger('parent');
                 $table->timestamps();
 
-                $table->foreign('gantt_id')
+                $table->foreign('chart_id')
                       ->references('id')
-                      ->on('gantts')
+                      ->on('gantt_charts')
                       ->onDelete('cascade');
 
                 $table->foreign('parent')
@@ -75,7 +75,7 @@ class CreateGanttTaskTable extends Migration
                 'gantt_tasks',
                 function ($table) {
                     $table->dropForeign('gantt_tasks_parent_foreign');
-                    $table->dropForeign('gantt_tasks_gantt_id_foreign');
+                    $table->dropForeign('gantt_tasks_chart_id_foreign');
                 }
             );
         } catch (\Exception $e) {

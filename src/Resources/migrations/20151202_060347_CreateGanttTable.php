@@ -12,7 +12,7 @@ class CreateGanttTable extends Migration
     public function up()
     {
         $this->schema->create(
-            'gantts',
+            'gantt_charts',
             function ($table) {
                 $table->increments('id');
                 $table->unsignedInteger('author_id');
@@ -52,7 +52,20 @@ class CreateGanttTable extends Migration
                 $this->schema->table(
                     'gantt_tasks',
                     function ($table) {
-                        $table->dropForeign('gantt_tasks_gantt_id_foreign');
+                        $table->dropForeign('gantt_tasks_chart_id_foreign');
+                    }
+                );
+            } catch (\Exception $e) {
+                //do nothing
+            }
+        }
+
+        if ($this->schema->hasTable('gantt_links')) {
+            try {
+                $this->schema->table(
+                    'gantt_tasks',
+                    function ($table) {
+                        $table->dropForeign('gantt_links_chart_id_foreign');
                     }
                 );
             } catch (\Exception $e) {
@@ -65,7 +78,7 @@ class CreateGanttTable extends Migration
                 $this->schema->table(
                     'gantt_bookmarks',
                     function ($table) {
-                        $table->dropForeign('gantt_bookmarks_gantt_id_foreign');
+                        $table->dropForeign('gantt_bookmarks_chart_id_foreign');
                     }
                 );
             } catch (\Exception $e) {
@@ -73,6 +86,6 @@ class CreateGanttTable extends Migration
             }
         }
 
-        $this->schema->drop('gantts');
+        $this->schema->drop('gantt_charts');
     }
 }
