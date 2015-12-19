@@ -17,6 +17,7 @@ class CreateGanttTable extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('author_id');
                 $table->string('name');
+                $table->text('settings');
                 $table->timestamps();
 
                 $table->foreign('author_id')
@@ -39,7 +40,7 @@ class CreateGanttTable extends Migration
                 $this->schema->table(
                     'gantt_members',
                     function ($table) {
-                        $table->dropForeign('gantt_members_gantt_id_foreign');
+                        $table->dropForeign('gantt_members_chart_id_foreign');
                     }
                 );
             } catch (\Exception $e) {
@@ -63,7 +64,7 @@ class CreateGanttTable extends Migration
         if ($this->schema->hasTable('gantt_links')) {
             try {
                 $this->schema->table(
-                    'gantt_tasks',
+                    'gantt_links',
                     function ($table) {
                         $table->dropForeign('gantt_links_chart_id_foreign');
                     }

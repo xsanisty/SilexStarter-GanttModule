@@ -16,12 +16,16 @@ class CreateGanttTaskTable extends Migration
             function ($table) {
                 $table->increments('id');
                 $table->unsignedInteger('chart_id');
-                $table->dateTime('date_start');
+                $table->dateTime('start_date');
+                $table->dateTime('end_date');
                 $table->string('text');
+                $table->enum('type', ['task', 'project', 'milestone']);
                 $table->float('progress');
+                $table->float('priority');
+                $table->boolean('open')->default(true);
                 $table->unsignedInteger('duration');
                 $table->unsignedInteger('sortorder');
-                $table->unsignedInteger('parent');
+                $table->unsignedInteger('parent')->nullable();
                 $table->timestamps();
 
                 $table->foreign('chart_id')
