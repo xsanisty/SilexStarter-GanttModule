@@ -17,6 +17,7 @@ class CreateGanttTable extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('author_id');
                 $table->string('name');
+                $table->enum('visibility', ['private', 'public'])->default('private');
                 $table->text('settings');
                 $table->timestamps();
 

@@ -35,7 +35,8 @@ class CreateGanttTaskTable extends Migration
 
                 $table->foreign('parent')
                       ->references('id')
-                      ->on('gantt_tasks');
+                      ->on('gantt_tasks')
+                      ->onDelete('cascade');
 
                 $table->engine = 'InnoDB';
             }
