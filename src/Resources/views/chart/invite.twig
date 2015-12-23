@@ -1,0 +1,22 @@
+<div class="modal fade" id="invite-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Invite Others
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('gantt.chart.invite') }}" class="form-horizontal" id="invite-form" method="POST">
+                    <div class="form-group">
+                        <label for="" class="col-md-3">Email</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-sm" name="users">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<form action="{{ url_for('gantt.chart.store') }}" class="form-horizontal" id="chart-form" method="post">
+    <input type="hidden" id="_method" name="_method" value="POST">
+    <input type="hidden" id="id" name="id">
+    <div class="form-group">
+        <label for="name" class="col-md-3">Chart Name</label>
+        <div class="col-md-9">
+            <input id="name" name="name" type="text" class="form-control input-sm">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="visibility" class="col-md-3">Visibility</label>
+        <div class="col-md-9">
+            <select id="visibility" name="visibility" type="text" class="form-control input-sm">
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <button id="btn-chart-save" class="btn btn-sm btn-primary pull-right">Save</button>
+            <button id="btn-chart-cancel" class="btn btn-sm btn-danger pull-right" style="margin-right: 5px" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</form>
