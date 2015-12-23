@@ -1,0 +1,27 @@
+{
+    "name": "xsanisty/silexstarter-gantt",
+    "description": "Gantt module for SilexStarter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xsanisty Dev Team",
+            "email": "developers@xsanisty.com"
+        },
+        {
+            "name": "Ikhsan Agustian",
+            "email": "ikhsan017@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.4.0",
+        "hashids/hashids": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xsanisty\\Gantt\\" : [
+                "src/"
+            ]
+        }
+    },
+    "minimum-stability": "stable"
+}
