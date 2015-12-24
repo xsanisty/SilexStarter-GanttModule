@@ -55,7 +55,6 @@
     {{ javascript([
         '@xsanisty-gantt/js/dhtmlxgantt.js',
         'http://export.dhtmlx.com/gantt/api.js',
-        '@xsanisty-gantt/js/ganttloader.js'
     ]) }}
 
     <script>
@@ -66,8 +65,7 @@
 
         gantt.config.readonly= true;
         gantt.config.columns = [
-            {name:"text", label:"Task name", width:200, tree:true },
-            {name:"add", label:"", width:44 }
+            {name:"text", label:"Task name", width:250, tree:true }
         ];
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
