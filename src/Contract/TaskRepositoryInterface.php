@@ -10,6 +10,8 @@ interface TaskRepositoryInterface
 
     public function findByChart(Chart $cart);
 
+    public function reCalculateProgress($id);
+
     public function create(array $task);
 
     public function update($id, array $data);

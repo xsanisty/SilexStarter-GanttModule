@@ -2,11 +2,9 @@
 {% extends '@silexstarter-dashboard/'~ template ~'/index.twig' %}
 
 {% block stylesheet %}
-    {{parent()}}
-
-    {{ stylesheet([
-        '@xsanisty-gantt/css/dhtmlxgantt.css',
-    ]) }}
+    {{ stylesheet('@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.css') }}
+    {{ parent() }}
+    {{ stylesheet('@xsanisty-gantt/css/dhtmlxgantt.css') }}
 
     <style>
         html, body{ height:100%; padding:0px; margin:0px;}
@@ -44,10 +42,6 @@
                                 {% endif %}
                                 <li><a href="#" id="btn-export-pdf"><i class="fa fa-file-pdf-o"></i>Export To PDF</a></li>
                                 <li><a href="#" id="btn-export-png"><i class="fa fa-image"></i>Export To PNG</a></li>
-
-                                {#<li class="divider"></li>
-                                <li><a href="#"><i class="fa fa-fw fa-paperclip"></i>Attachments</a></li>
-                                <li><a href="#"><i class="fa fa-fw fa-upload"></i>Upload Attachment</a></li>#}
                             </ul>
                         </div>
                       </div>
@@ -71,6 +65,7 @@
 
     {{ javascript([
         '@xsanisty-gantt/js/dhtmlxgantt.js',
+        '@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.js',
         'http://export.dhtmlx.com/gantt/api.js',
         '@xsanisty-gantt/js/ganttloader.js'
     ]) }}

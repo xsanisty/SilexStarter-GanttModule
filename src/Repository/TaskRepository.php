@@ -44,7 +44,15 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function update($id, array $data)
     {
-        return $this->task->newQuery()->where('id', '=', $id)->update($data);
+        $task           = $this->task->newQuery()->find($id);
+        $lastProgress   = $task->progress;
+
+        $task->update($data);
+
+        if ($lastProgress != $data['progress']) {
+            echo 'calculating progress';
+            $this->reCalculateProgress($id);
+        }
     }
 
     /**
@@ -53,5 +61,28 @@ class TaskRepository implements TaskRepositoryInterface
     public function delete($id)
     {
         return $this->task->newQuery()->where('id', '=', $id)->delete();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reCalculateProgress($id)
+    {
+        $task       = $this->task->newQuery()->with('parentTask')->find($id);
+        $parent     = $task->parentTask;
+
+        if ($parent) {
+            $siblings   = $parent->subTasks()->select(['progress', 'duration'])->get();
+            $duration   = 0;
+            $progress   = 0;
+
+            foreach ($siblings as $sibling) {
+                $duration  += $sibling->duration;
+                $progress  += $sibling->progress * $sibling->duration;
+            }
+
+            $parent->update(['progress' => $progress / $duration]);
+            $this->reCalculateProgress($parent->id);
+        }
     }
 }

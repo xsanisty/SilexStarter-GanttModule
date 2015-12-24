@@ -20,6 +20,11 @@ $('#btn-edit').click(function(e){
     $('#chart-modal').modal('show');
 });
 
+$('#invite-user-email').select2({
+    tags: true,
+    tokenSeparators: [',']
+})
+
 gantt.config.columns = [
     {name:"text", label:"Task name", width:200, tree:true },
     {name:"add", label:"", width:44 }

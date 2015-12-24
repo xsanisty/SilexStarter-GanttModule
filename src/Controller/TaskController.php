@@ -47,6 +47,10 @@ class TaskController
         }
     }
 
+    public function show($id)
+    {
+        return Response::json($this->task->reCalculateProgress($id));
+    }
 
     public function publicTask($chart_id)
     {

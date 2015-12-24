@@ -39,6 +39,11 @@ class Task extends Model
         return $this->belongsTo('Xsanisty\Gantt\Model\Chart', 'chart_id');
     }
 
+    public function siblings()
+    {
+        return $this->parentTask->subTasks();
+    }
+
     /** Mutators */
 
     /**public function getStartDateAttribute()
