@@ -36,7 +36,13 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function create(array $task)
     {
-        return $this->task->create($task);
+        $task = $this->task->create($task);
+
+        if ($task->parent) {
+            $this->reCalculateProgress($task->id);
+        }
+
+        return $task;
     }
 
     /**
@@ -50,7 +56,6 @@ class TaskRepository implements TaskRepositoryInterface
         $task->update($data);
 
         if ($lastProgress != $data['progress']) {
-            echo 'calculating progress';
             $this->reCalculateProgress($id);
         }
     }
