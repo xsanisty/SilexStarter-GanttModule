@@ -18,6 +18,43 @@
         </div>
     </div>
 
+    <div class="form-group" style="border-bottom: solid 1px #ddd">
+        <label for="" class="col-md-12">Sidebar Configuration</label>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 col-md-offset-1">Type</label>
+        <label class="col-md-5">Label</label>
+        <label class="col-md-2">Align</label>
+        <label class="col-md-2">Width</label>
+    </div>
+
+    {% for field in ['text', 'start_date', 'progress', 'duration', 'priority'] %}
+        <div class="form-group">
+            <div class="col-md-1">
+                <div class="checkbox icheck" style="padding-top: 2px">
+                    <label><input type="checkbox" name="settings[grid][{{field}}][enabled]"></label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][name]" value="{{field}}" readonly>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][label]">
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-control input-sm" style="width: 100%" name="settings[grid][{{field}}][align]">
+                    <option value="left">left</option>
+                    <option value="center">center</option>
+                    <option value="right">right</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][width]">
+            </div>
+        </div>
+    {% endfor %}
+
     <div class="form-group">
         <div class="col-md-12">
             <button id="btn-chart-save" class="btn btn-sm btn-primary pull-right">Save</button>

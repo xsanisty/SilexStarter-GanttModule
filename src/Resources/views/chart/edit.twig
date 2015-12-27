@@ -2,9 +2,12 @@
 {% extends '@silexstarter-dashboard/'~ template ~'/index.twig' %}
 
 {% block stylesheet %}
-    {{ stylesheet('@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.css') }}
+    {{ stylesheet([
+        '@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.css',
+        '@silexstarter-dashboard/admin-lte/plugins/iCheck/square/blue.css',
+    ]) }}
     {{ parent() }}
-    {{ stylesheet('@xsanisty-gantt/css/dhtmlxgantt.css') }}
+    {{ stylesheet('@xsanisty-gantt/pro/dhtmlxgantt.css') }}
 
     <style>
         html, body{ height:100%; padding:0px; margin:0px;}
@@ -64,9 +67,10 @@
     {{parent()}}
 
     {{ javascript([
-        '@xsanisty-gantt/js/dhtmlxgantt.js',
+        '@xsanisty-gantt/pro/dhtmlxgantt.js',
         '@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.js',
         'http://export.dhtmlx.com/gantt/api.js',
+        '@silexstarter-dashboard/admin-lte/plugins/iCheck/icheck.min.js',
         '@xsanisty-gantt/js/ganttloader.js'
     ]) }}
 {% endblock %}

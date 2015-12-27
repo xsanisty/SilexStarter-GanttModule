@@ -4,9 +4,11 @@
 {% block stylesheet %}
     {{parent()}}
 
-    {{ stylesheet([
-        '@xsanisty-gantt/css/dhtmlxgantt.css',
-    ]) }}
+    {% if config.get('@xsanisty-gantt.gantt.pro_version_enabled') %}
+        {{ stylesheet('@xsanisty-gantt/pro/dhtmlxgantt.css') }}
+    {% else %}
+        {{ stylesheet('@xsanisty-gantt/css/dhtmlxgantt.css') }}
+    {% endif %}
 
     <style>
         html, body{ height:100%; padding:0px; margin:0px;}
@@ -52,10 +54,14 @@
 {% block javascript %}
     {{parent()}}
 
-    {{ javascript([
-        '@xsanisty-gantt/js/dhtmlxgantt.js',
-        'http://export.dhtmlx.com/gantt/api.js',
-    ]) }}
+
+    {% if config.get('@xsanisty-gantt.gantt.pro_version_enabled') %}
+        {{ javascript('@xsanisty-gantt/pro/dhtmlxgantt.js') }}
+    {% else %}
+        {{ javascript('@xsanisty-gantt/js/dhtmlxgantt.js') }}
+    {% endif %}
+
+    {{ javascript('http://export.dhtmlx.com/gantt/api.js') }}
 
     <script>
 
