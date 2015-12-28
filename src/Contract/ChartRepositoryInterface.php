@@ -78,6 +78,16 @@ interface ChartRepositoryInterface
     public function bookmark($ganttId, $userId);
 
     /**
+     * Remove existing bookmark entry.
+     *
+     * @param  int $ganttId
+     * @param  int $userId
+     *
+     * @return void
+     */
+    public function removeBookmark($ganttId, $userId);
+
+    /**
      * Create new chart.
      *
      * @param  array    $data   The chart data
