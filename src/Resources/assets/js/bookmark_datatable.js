@@ -2,7 +2,7 @@ $(document).ready(function(){
     var domSetting  = global.admin_template == 'RDash'
                     ? "<'row'<'col-md-12'<'widget'<'widget-title'<'row'<'col-md-5'<'#icon-wrapper'>><'col-md-3 hidden-xs'l><'col-md-4 hidden-xs'f>><'clearfix'>><'widget-body flow no-padding'tr><'widget-title'<'col-sm-5'i><'col-sm-7'p><'clearfix'>>>>"
                     : "<'row'<'col-md-12'<'box box-primary'<'box-header'<'row'<'col-md-6'<'#icon-wrapper'>><'col-md-3 hidden-xs'l><'col-md-3 hidden-xs'f>><> <'box-body no-padding'tr><'box-footer clearfix'<'col-sm-5'i><'col-sm-7'p>>>>>";
-    var $datatable = $('#gantt-table').DataTable({
+    var $datatable = $('#bookmark-table').DataTable({
         "processing": true,
         "serverSide": true,
         "responsive": true,
@@ -22,7 +22,7 @@ $(document).ready(function(){
             }
         },
         "ajax": {
-            "url": global.ganttDatatableUrl,
+            "url": global.datatableUrl,
             "type": "POST",
             "error": function(resp){
                 if(resp.status == 401){
@@ -34,7 +34,7 @@ $(document).ready(function(){
     }).on('click', '.btn-delete', function(e){
         e.preventDefault();
 
-        if(confirm('Are you sure want to delete this chart?')){
+        if(confirm('Are you sure want to delete this bookmark?')){
             var btn = $(this);
             var url = btn.attr('href');
 
@@ -52,59 +52,11 @@ $(document).ready(function(){
                         alert('Your session is expired!\n\nYou will be redirected to the login page shortly.');
                         window.location.reload();
                     } else {
-                        alert('Error occured when deleting data');
+                        alert('Error occured when deleting bookmark');
                         btn.prop('disabled', false).text('delete');
                     }
                 }
             });
         }
-    });
-
-    $('#btn-chart-create')
-    .appendTo('#icon-wrapper')
-    .click(function(e){
-        e.preventDefault();
-
-        $('#chart-form')[0].reset();
-        $('#chart-modal').modal('show');
-    });
-
-    $('#btn-chart-save').click(function(e){
-        e.preventDefault();
-
-        var formId = '#chart-form';
-        var btn = $(this);
-
-        btn.prop('disabled', true).text('Saving...');
-
-        $.ajax({
-            'method' : 'POST',
-            'data' : $(formId).serialize(),
-            'url' : $('#_method').val() == 'PUT' ? $(formId).attr('action') + $('#id').val() : $(formId).attr('action'),
-            'success' : function(resp){
-                alert(resp.content);
-
-                btn.prop('disabled', false).text('Save');
-
-                $('#chart-modal').modal('hide');
-                $datatable.ajax.reload(null, false);
-            },
-            'error': function(resp){
-                btn.prop('disabled', false).text('Save');
-
-                if(resp.status == 401){
-                    alert('Your session is expired!\n\nYou will be redirected to the login page shortly.');
-                    window.location.reload();
-                } else {
-                    alert(resp.responseJSON.content + '\n\nDetailed error:\n' + resp.responseJSON.errors[0].message);
-                }
-            }
-        });
-    });
-
-    $('input[type=checkbox]').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' // optional
     });
 });

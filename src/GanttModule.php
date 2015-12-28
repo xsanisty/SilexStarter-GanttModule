@@ -35,7 +35,7 @@ class GanttModule implements ModuleProviderInterface
      */
     public function getRequiredModules()
     {
-        return ['silexstarter-dashboard'];
+        return ['silexstarter-dashboard', 'silexstarter-usermanager'];
     }
 
     /**
@@ -143,6 +143,19 @@ class GanttModule implements ModuleProviderInterface
                         'url'   => Url::to('gantt.bookmark.index')
                     ]
                 );
+
+                $bookmarks = $app['gantt.chart.repository']->findBookmarkedByUser($app['user']);
+
+                foreach ($bookmarks as $chart) {
+                    $ganttMenu->addChildren(
+                        'my-gantt-' . $chart->id,
+                        [
+                            'label' => $chart->name,
+                            'icon'  => 'circle-o',
+                            'url'   => Url::to('gantt.chart.edit', ['id' => $chart->id])
+                        ]
+                    );
+                }
             }
         );
     }

@@ -13,7 +13,27 @@ $('#btn-invite').click(function(e){
 
     $('#invite-modal').modal('show');
 });
-$('#btn-bookmark').click(function(){});
+$('#btn-bookmark').click(function(e){
+    e.preventDefault();
+
+    var chartId = $(this).attr('data-id');
+    $.ajax({
+        url : global.bookmarkUrl,
+        method : 'POST',
+        dataType : 'json',
+        data : {chart_id : chartId},
+        success : function(resp){
+            if (resp.success) {
+                alert('Chart bookmarked!');
+            } else {
+                alert('Error occured while bookmarking chart!');
+            }
+        },
+        error : function(resp){
+            alert('Error occured while bookmarking chart!');
+        }
+    });
+});
 $('#btn-edit').click(function(e){
     e.preventDefault();
 
@@ -23,14 +43,32 @@ $('#btn-edit').click(function(e){
 $('#invite-user-email').select2({
     tags: true,
     tokenSeparators: [',']
-})
+});
 
-gantt.config.columns = [
-    {name:"text", label:"Task name", width:200, tree:true },
-    {name:"add", label:"", width:44 }
-];
+$('input[type=checkbox]').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'iradio_square-blue',
+    increaseArea: '10%' // optional
+});
+
+/** gantt configuration */
+global.ganttSettings.columns.push({name:"add", label:"", width:44 });
+gantt.config.grid_width = 0;
+
+for( var conf in global.ganttSettings.columns) {
+    gantt.config.grid_width += parseFloat(global.ganttSettings.columns[conf].width);
+}
+
+gantt.config.columns  = global.ganttSettings.columns;
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
+/** gantt hook template */
+gantt.templates.task_text = function(start, end, task){
+    if (!task.progress) {
+        task.progress = 0;
+    }
+    return task.text+ ' [' +Math.round(task.progress*100)+ '%]';
+};
 gantt.attachEvent("onTaskClosed", function(id){
     $.ajax({
         'method' : 'PUT',

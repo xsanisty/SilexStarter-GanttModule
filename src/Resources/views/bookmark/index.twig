@@ -1,0 +1,39 @@
+{% set template = config.get('@silexstarter-dashboard.config.template') %}
+{% extends '@silexstarter-dashboard/'~ template ~'/index.twig' %}
+
+{% block stylesheet %}
+    {{parent()}}
+
+    {{ stylesheet([
+        '@silexstarter-datatable/css/dataTables.bootstrap.css',
+        '@silexstarter-datatable/css/responsive.bootstrap.min.css',
+    ]) }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-condensed table-striped" id="bookmark-table" style="width: 100%; max-width: 1200px">
+        <thead>
+            <tr>
+                <th class="all" style="width: 90%">Chart Title</th>
+                <th class="all text-center" style="width: 10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="2">Data not loaded!</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {{ javascript([
+        '@silexstarter-datatable/js/jquery.dataTables.min.js',
+        '@silexstarter-datatable/js/dataTables.bootstrap.min.js',
+        '@silexstarter-datatable/js/dataTables.responsive.min.js',
+        '@xsanisty-gantt/js/bookmark_datatable.js',
+    ]) }}
+
+{% endblock %}

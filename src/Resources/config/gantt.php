@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'pro_version_enabled' => false
+    'pro_version_enabled' => true
 ];

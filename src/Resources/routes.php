@@ -61,6 +61,23 @@ Route::group(
             ]
         );
 
+        /** route to bookmark */
+        Route::post(
+            '/bookmark',
+            'BookmarkController:store',
+            [
+                'as' => 'gantt.bookmark.create'
+            ]
+        );
+
+        Route::post(
+            '/bookmark/datatable',
+            'BookmarkController:datatable',
+            [
+                'as' => 'gantt.bookmark.datatable'
+            ]
+        );
+
         Route::get(
             '/bookmark',
             'BookmarkController:index',
@@ -71,7 +88,7 @@ Route::group(
 
         Route::delete(
             '/bookmark/{id}',
-            'BookmarkController:index',
+            'BookmarkController:delete',
             [
                 'as'    => 'gantt.bookmark.delete',
                 'assert'=> ['id' => '\d+']

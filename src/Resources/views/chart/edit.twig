@@ -6,8 +6,14 @@
         '@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.css',
         '@silexstarter-dashboard/admin-lte/plugins/iCheck/square/blue.css',
     ]) }}
+
     {{ parent() }}
-    {{ stylesheet('@xsanisty-gantt/pro/dhtmlxgantt.css') }}
+
+    {% if config.get('@xsanisty-gantt.gantt.pro_version_enabled') %}
+        {{ stylesheet('@xsanisty-gantt/pro/dhtmlxgantt.css') }}
+    {% else %}
+        {{ stylesheet('@xsanisty-gantt/css/dhtmlxgantt.css') }}
+    {% endif %}
 
     <style>
         html, body{ height:100%; padding:0px; margin:0px;}
@@ -36,9 +42,9 @@
                             <ul role="menu" class="dropdown-menu">
                                 <li><a href="#" id="btn-refresh"><i class="fa fa-fw fa-refresh"></i>Refresh Chart</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#" id="btn-invite"><i class="fa fa-fw fa-user"></i>Invite User</a></li>
-                                <li><a href="#" id="btn-edit"><i class="fa fa-fw fa-edit"></i>Edit Chart</a></li>
-                                <li><a href="#" id="btn-bookmark"><i class="fa fa-fw fa-bookmark"></i>Bookmark Chart</a></li>
+                                <li><a href="#" id="btn-invite" data-id="{{ chart.id }}"><i class="fa fa-fw fa-user"></i>Invite User</a></li>
+                                <li><a href="#" id="btn-edit" data-id="{{ chart.id }}"><i class="fa fa-fw fa-edit"></i>Edit Chart</a></li>
+                                <li><a href="#" id="btn-bookmark" data-id="{{ chart.id }}"><i class="fa fa-fw fa-bookmark"></i>Bookmark Chart</a></li>
                                 <li class="divider"></li>
                                 {% if public_url %}
                                     <li><a href="{{ public_url }}" target="_blank"><i class="fa fa-external-link"></i>Public Url</a></li>
@@ -66,8 +72,14 @@
 {% block javascript %}
     {{parent()}}
 
+    {% if config.get('@xsanisty-gantt.gantt.pro_version_enabled') %}
+        {{ javascript('@xsanisty-gantt/pro/dhtmlxgantt.js') }}
+    {% else %}
+        {{ javascript('@xsanisty-gantt/js/dhtmlxgantt.js') }}
+    {% endif %}
+
     {{ javascript([
-        '@xsanisty-gantt/pro/dhtmlxgantt.js',
+        '@xsanisty-gantt/js/ext/dhtmlxgantt_quick_info.js',
         '@silexstarter-dashboard/admin-lte/plugins/select2/select2.min.js',
         'http://export.dhtmlx.com/gantt/api.js',
         '@silexstarter-dashboard/admin-lte/plugins/iCheck/icheck.min.js',

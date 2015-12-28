@@ -9,6 +9,20 @@
     </div>
 
     <div class="form-group">
+        <label for="visibility" class="col-md-3">Scale</label>
+        <div class="col-md-9">
+            <select id="visibility" name="visibility" type="text" class="form-control input-sm">
+                <option value="hour">Hour</option>
+                <option value="work_hour">Work Hour</option>
+                <option value="day">Day</option>
+                <option value="work_day">Work Day</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
         <label for="visibility" class="col-md-3">Visibility</label>
         <div class="col-md-9">
             <select id="visibility" name="visibility" type="text" class="form-control input-sm">
@@ -19,7 +33,7 @@
     </div>
 
     <div class="form-group" style="border-bottom: solid 1px #ddd">
-        <label for="" class="col-md-12">Sidebar Configuration</label>
+        <label class="col-md-12">Sidebar Configuration</label>
     </div>
 
     <div class="form-group">
@@ -33,24 +47,30 @@
         <div class="form-group">
             <div class="col-md-1">
                 <div class="checkbox icheck" style="padding-top: 2px">
-                    <label><input type="checkbox" name="settings[grid][{{field}}][enabled]"></label>
+                    {% if field == 'text' %}
+                        <label><input type="checkbox" name="settings[columns][{{field}}][enabled]" value="1" checked disabled></label>
+                        <input type="hidden" name="settings[columns][{{field}}][enabled]" value="1" />
+                        <input type="hidden" name="settings[columns][{{field}}][tree]" value="1" />
+                    {% else %}
+                        <label><input type="checkbox" name="settings[columns][{{field}}][enabled]" value="1" ></label>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][name]" value="{{field}}" readonly>
+                <input type="text" class="form-control input-sm" name="settings[columns][{{field}}][name]" value="{{field}}" readonly>
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][label]">
+                <input type="text" class="form-control input-sm" name="settings[columns][{{field}}][label]" {% if field == 'text' %}value="Task Name"{% else %}value="{{field}}"{% endif %}>
             </div>
             <div class="col-md-2">
-                <select name="" id="" class="form-control input-sm" style="width: 100%" name="settings[grid][{{field}}][align]">
+                <select name="" id="" class="form-control input-sm" style="width: 100%" name="settings[columns][{{field}}][align]">
                     <option value="left">left</option>
                     <option value="center">center</option>
                     <option value="right">right</option>
                 </select>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control input-sm" name="settings[grid][{{field}}][width]">
+                <input type="text" class="form-control input-sm" name="settings[columns][{{field}}][width]" {% if field == 'text' %}value="200"{% else %}value="70"{% endif %}>
             </div>
         </div>
     {% endfor %}

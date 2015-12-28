@@ -13,6 +13,11 @@ interface ChartRepositoryInterface
     public function generateDatatableQueryForUser(UserInterface $user);
 
     /**
+     * Generate query for datatable builder
+     */
+    public function generateBookmarkQueryForUser(UserInterface $user);
+
+    /**
      * Find chart by id;
      *
      * @param  int $id  The chart id

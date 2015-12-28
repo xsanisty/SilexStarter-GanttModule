@@ -30,4 +30,9 @@ class Chart extends Model
     {
         return $this->hasMany('Xsanisty\Gantt\Model\Link', 'chart_id');
     }
+
+    public function bookmarkers()
+    {
+        return $this->belongsToMany('Cartalyst\Sentry\Users\Eloquent\User', 'gantt_bookmarks', 'chart_id', 'user_id');
+    }
 }

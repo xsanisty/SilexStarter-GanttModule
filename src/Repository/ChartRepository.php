@@ -45,6 +45,17 @@ class ChartRepository implements ChartRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function generateBookmarkQueryForUser(UserInterface $user)
+    {
+        return $this->chart
+        ->newQuery()
+        ->join('gantt_bookmarks', 'gantt_charts.id', '=', 'gantt_bookmarks.chart_id')
+        ->where('gantt_bookmarks.user_id', '=', $user->getId());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function findById($id)
     {
         return $this->chart->find($id);
@@ -124,7 +135,7 @@ class ChartRepository implements ChartRepositoryInterface
      */
     public function findBookmarkedByUser(UserInterface $user)
     {
-        $chart = $this->chart
+        return $this->chart
         ->newQuery()
         ->join('gantt_bookmarks', 'gantt_charts.id', '=', 'gantt_bookmarks.chart_id')
         ->where('gantt_bookmarks.user_id', '=', $user->getId())
@@ -136,7 +147,15 @@ class ChartRepository implements ChartRepositoryInterface
      */
     public function bookmark($ganttId, $userId)
     {
+        return $this->chart->newQuery()->find($ganttId)->bookmarkers()->attach($userId);
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function removeBookmark($ganttId, $userId)
+    {
+        return $this->chart->newQuery()->find($ganttId)->bookmarkers()->detach($userId);
     }
 
     /**

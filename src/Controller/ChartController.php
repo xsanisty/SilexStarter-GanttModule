@@ -80,7 +80,13 @@ class ChartController
             ]
         );
 
-        Asset::exportVariable('ganttApi', $chartUrl);
+        Asset::exportVariable(
+            [
+                'ganttApi'      => $chartUrl,
+                'ganttSettings' => $chart->settings,
+                'bookmarkUrl'   => Url::to('gantt.bookmark.create')
+            ]
+        );
 
         return View::make(
             '@xsanisty-gantt/chart/edit',
@@ -88,8 +94,7 @@ class ChartController
                 'title'         => $chart->name,
                 'page_title'    => $chart->name,
                 'chart'         => $chart,
-                'public_url'    => $publicUrl
-
+                'public_url'    => $publicUrl,
             ]
         );
     }
@@ -100,13 +105,22 @@ class ChartController
     public function store()
     {
         try {
-            $chart = Request::only(['name', 'visibility']);
+            $chart      = Request::only(['name', 'visibility', 'settings'], ['', 'private', []]);
+            $colSettings= [];
 
             if (trim($chart['name']) == '') {
                 throw new Exception("Chart name can not be empty!", 500);
             }
 
             $chart['author_id'] = $this->user->getId();
+
+            foreach ($chart['settings']['columns'] as $column => $config) {
+                if (!empty($config['enabled'])) {
+                    $colSettings[] = $config;
+                }
+            }
+
+            $chart['settings']['columns'] = $colSettings;
 
             $this->chartRepo->create($chart);
 
@@ -146,6 +160,7 @@ class ChartController
         }
 
         Asset::exportVariable('ganttApi', Url::to('gantt.chart.public', ['chart_id' => $chart_id['hash']]));
+        Asset::exportVariable('ganttSettings', $chart->settings);
 
         return View::make(
             '@xsanisty-gantt/chart/public_chart',
@@ -207,7 +222,7 @@ class ChartController
             $styleTpl   = 'style="margin-right: 5px; margin-top:5px"';
             $editTpl    = '<a href="%s" class="btn btn-xs btn-primary btn-edit" %s >edit</a>';
             $deleteTpl  = '<a href="%s" class="btn btn-xs btn-danger btn-delete" %s >delete</a>';
-            $publicTpl  = '<a href="%s" class="btn btn-xs btn-info btn-public" %s  target="_blank">public view</a>';
+            $publicTpl  = '<a href="%s" class="btn btn-xs btn-info btn-public" %s target="_blank">public view</a>';
 
             $membersLink= '';
             $isAuthor   = $user->getId() == $row->author->id;

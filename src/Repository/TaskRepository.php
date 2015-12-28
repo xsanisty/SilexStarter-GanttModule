@@ -55,7 +55,7 @@ class TaskRepository implements TaskRepositoryInterface
 
         $task->update($data);
 
-        if ($lastProgress != $data['progress']) {
+        if (isset($data['progress']) && $lastProgress != $data['progress']) {
             $this->reCalculateProgress($id);
         }
     }

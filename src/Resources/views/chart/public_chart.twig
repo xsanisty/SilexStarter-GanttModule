@@ -54,37 +54,34 @@
 {% block javascript %}
     {{parent()}}
 
-
     {% if config.get('@xsanisty-gantt.gantt.pro_version_enabled') %}
         {{ javascript('@xsanisty-gantt/pro/dhtmlxgantt.js') }}
     {% else %}
         {{ javascript('@xsanisty-gantt/js/dhtmlxgantt.js') }}
     {% endif %}
 
-    {{ javascript('http://export.dhtmlx.com/gantt/api.js') }}
+
+    {{ javascript(['@xsanisty-gantt/js/ext/dhtmlxgantt_quick_info.js','http://export.dhtmlx.com/gantt/api.js']) }}
 
     <script>
 
         $('#btn-refresh').click(function(){
             gantt.load(global.ganttApi+'/task/');
         });
+        $('body').removeClass('sidebar-collapse');
 
-        gantt.config.readonly= true;
-        gantt.config.columns = [
-            {name:"text", label:"Task name", width:250, tree:true }
-        ];
+        gantt.config.grid_width = 0;
+
+        for( var conf in global.ganttSettings.columns) {
+            gantt.config.grid_width += parseFloat(global.ganttSettings.columns[conf].width);
+        }
+
+        gantt.config.columns  = global.ganttSettings.columns;
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
-
+        gantt.config.readonly = true;
 
         gantt.init("gantt-container");
         gantt.load(global.ganttApi+'/task/');
-
-        var dp = new gantt.dataProcessor(global.ganttApi);
-        dp.init(gantt);
-        dp.setTransactionMode("REST");
-        dp.defineAction("error", function(sid, response){
-            console.log(sid, response);
-        });
     </script>
 
 {% endblock %}
