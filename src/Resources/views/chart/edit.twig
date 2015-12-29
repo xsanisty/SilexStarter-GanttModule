@@ -43,11 +43,11 @@
                                 <li><a href="#" id="btn-refresh"><i class="fa fa-fw fa-refresh"></i>Refresh Chart</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#" id="btn-invite" data-id="{{ chart.id }}"><i class="fa fa-fw fa-user"></i>Invite User</a></li>
-                                <li><a href="#" id="btn-edit" data-id="{{ chart.id }}"><i class="fa fa-fw fa-edit"></i>Edit Chart</a></li>
+                                <li><a href="#" id="btn-edit" data-id="{{ chart.id }}"><i class="fa fa-fw fa-wrench"></i>Chart Settings</a></li>
                                 <li><a href="#" id="btn-bookmark" data-id="{{ chart.id }}"><i class="fa fa-fw fa-bookmark"></i>Bookmark Chart</a></li>
                                 <li class="divider"></li>
                                 {% if public_url %}
-                                    <li><a href="{{ public_url }}" target="_blank"><i class="fa fa-external-link"></i>Public Url</a></li>
+                                    <li><a href="{{ public_url }}" id="btn-public" target="_blank"><i class="fa fa-external-link"></i>Public Url</a></li>
                                 {% endif %}
                                 <li><a href="#" id="btn-export-pdf"><i class="fa fa-file-pdf-o"></i>Export To PDF</a></li>
                                 <li><a href="#" id="btn-export-png"><i class="fa fa-image"></i>Export To PNG</a></li>

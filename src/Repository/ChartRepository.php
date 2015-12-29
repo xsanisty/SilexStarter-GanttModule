@@ -171,7 +171,15 @@ class ChartRepository implements ChartRepositoryInterface
      */
     public function update($id, array $data)
     {
-        return $this->chart->where('id', '=', $id)->update($data);
+        $chart = $this->chart->find($id);
+
+        foreach ($data as $attribute => $value) {
+            $chart->$attribute = $value;
+        }
+
+        $chart->save();
+
+        return $chart;
     }
 
     /**

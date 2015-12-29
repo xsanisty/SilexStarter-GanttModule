@@ -83,8 +83,8 @@ class ChartController
         Asset::exportVariable(
             [
                 'ganttApi'      => $chartUrl,
-                'ganttSettings' => $chart->settings,
-                'bookmarkUrl'   => Url::to('gantt.bookmark.create')
+                'bookmarkUrl'   => Url::to('gantt.bookmark.create'),
+                'chartInfo'     => $chart
             ]
         );
 
@@ -141,9 +141,46 @@ class ChartController
     /**
      * Update chart data
      */
-    public function update()
+    public function update($id)
     {
+        try {
+            $chart      = Request::except(['id', '_method']);
+            $colSettings= [];
 
+            if (trim($chart['name']) == '') {
+                throw new Exception("Chart name can not be empty!", 500);
+            }
+
+            $chart['author_id'] = $this->user->getId();
+
+            foreach ($chart['settings']['columns'] as $column => $config) {
+                if (!empty($config['enabled'])) {
+                    $colSettings[] = $config;
+                }
+            }
+
+            $chart['settings']['columns'] = $colSettings;
+
+            $chart = $this->chartRepo->update($id, $chart);
+
+            return Response::ajax(
+                [
+                    'message'   => 'Chart info updated!',
+                    'chart'     => $chart
+                ],
+                200
+            );
+        } catch (Exception $e) {
+            return Response::ajax(
+                'Error occured while updating chart',
+                500,
+                [[
+                    'message'   => $e->getMessage(),
+                    'code'      => $e->getCode(),
+                    'trace'     => $e->getTrace()
+                ]]
+            );
+        }
     }
 
     /**
