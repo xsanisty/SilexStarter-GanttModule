@@ -62,6 +62,12 @@ class ChartController
             return Response::view('@silexstarter-dashboard/'.Config::get('@silexstarter-dashboard.config.template').'/404', [], 404);
         }
 
+        try {
+            Menu::get('admin_sidebar')->setActive('xsanisty-gantt.my-gantt-' . $id);
+        } catch (Exception $e) {
+            //do nothing
+        }
+
         $chartUrl   = Url::to('gantt.chart.show', ['id' => $id]);
         $publicUrl  = $chart->visibility == 'public'
                     ? Url::to(
