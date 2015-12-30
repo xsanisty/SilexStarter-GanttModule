@@ -40,6 +40,8 @@ $('#btn-edit').click(function(e){
     var chartInfo = global.chartInfo;
 
     $('#chart-form')[0].reset();
+    var $list  = $('#columns_setting');
+    $list.find('input[type=checkbox]').iCheck('destroy');
 
     for(var a in chartInfo){
         if(a != 'settings') {
@@ -49,14 +51,13 @@ $('#btn-edit').click(function(e){
 
             for(var s in settings.columns){
                 $('#settings_columns_'+settings.columns[s].name+'_enabled').parents('.form-group').attr('data-order', s);
-                $('#settings_columns_'+settings.columns[s].name+'_enabled').iCheck(settings.columns[s].enabled == 1 ? 'check' : 'uncheck');
+                $('#settings_columns_'+settings.columns[s].name+'_enabled').prop('checked', settings.columns[s].enabled == 1);
                 $('#settings_columns_'+settings.columns[s].name+'_label').val(settings.columns[s].label);
                 $('#settings_columns_'+settings.columns[s].name+'_align').val(settings.columns[s].align);
                 $('#settings_columns_'+settings.columns[s].name+'_width').val(settings.columns[s].width);
             }
         }
     }
-    var $list  = $('#columns_setting');
     var $items = $list.find('.form-group').sort(function (a, b) {
         return $(a).attr('data-order') - $(b).attr('data-order');
     });
