@@ -43,8 +43,9 @@
         <label class="col-md-2">Width</label>
     </div>
 
+    <div class="div" id="columns_setting" style="margin:0; padding:0">
     {% for field in ['text', 'start_date', 'progress', 'duration', 'priority'] %}
-        <div class="form-group">
+        <div class="form-group" data-order="20">
             <div class="col-md-1">
                 <div class="checkbox icheck" style="padding-top: 2px">
                     {% if field == 'text' %}
@@ -74,6 +75,7 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 
     <div class="form-group">
         <div class="col-md-12">

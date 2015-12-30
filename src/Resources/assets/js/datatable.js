@@ -60,12 +60,21 @@ $(document).ready(function(){
         }
     });
 
+    var $settingCache = $('#columns_setting').html();
+    $('#columns_setting').sortable();
+
     $('#btn-chart-create')
     .appendTo('#icon-wrapper')
     .click(function(e){
         e.preventDefault();
 
         $('#chart-form')[0].reset();
+        $('#columns_setting').html($settingCache);
+        $('input[type=checkbox]').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
         $('#chart-modal').modal('show');
     });
 

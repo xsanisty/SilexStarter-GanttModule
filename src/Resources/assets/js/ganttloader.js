@@ -5,6 +5,7 @@ $('.sidebar-toggle').on('click', function()
     }, 500);
 });
 
+$('#columns_setting').sortable();
 $('#btn-refresh').click(function(){ gantt.load(global.ganttApi+'/task/'); });
 $('#btn-export-png').click(function(){ gantt.exportToPNG(); });
 $('#btn-export-pdf').click(function(){ gantt.exportToPDF(); });
@@ -47,6 +48,7 @@ $('#btn-edit').click(function(e){
             var settings = chartInfo[a];
 
             for(var s in settings.columns){
+                $('#settings_columns_'+settings.columns[s].name+'_enabled').parents('.form-group').attr('data-order', s);
                 $('#settings_columns_'+settings.columns[s].name+'_enabled').iCheck(settings.columns[s].enabled == 1 ? 'check' : 'uncheck');
                 $('#settings_columns_'+settings.columns[s].name+'_label').val(settings.columns[s].label);
                 $('#settings_columns_'+settings.columns[s].name+'_align').val(settings.columns[s].align);
@@ -54,6 +56,19 @@ $('#btn-edit').click(function(e){
             }
         }
     }
+    var $list  = $('#columns_setting');
+    var $items = $list.find('.form-group').sort(function (a, b) {
+        return $(a).attr('data-order') - $(b).attr('data-order');
+    });
+
+    $list.html('');
+    $list.append($items);
+
+    $list.find('input[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '10%' // optional
+    });
 
     $('#chart-modal').modal('show');
 });
