@@ -261,7 +261,7 @@ class ChartController
         $user       = $this->user;
         $hasher     = $this->hasher;
         $formatter  = function ($row) use ($user, $hasher) {
-            $profileTpl = '<a href="%s"><img data-toggle="tooltip" title="%s" src="%s" class="img-circle img-sm" /></a>';
+            $profileTpl = '<a href="%s"><img %s data-toggle="tooltip" title="%s" src="%s" class="img-circle img-sm" /></a>';
             $styleTpl   = 'style="margin-right: 5px; margin-top:5px"';
             $editTpl    = '<a href="%s" class="btn btn-xs btn-primary btn-edit" %s >edit</a>';
             $deleteTpl  = '<a href="%s" class="btn btn-xs btn-danger btn-delete" %s >delete</a>';
@@ -277,6 +277,7 @@ class ChartController
             $author = sprintf(
                 $profileTpl,
                 Url::to('usermanager.user.show', ['id' => $row->author->id]),
+                $styleTpl,
                 $row->author->first_name . ' ' . $row->author->last_name,
                 $row->author->profile_pic
                 ? Asset::resolvePath('img/profile/' . $row->author->profile_pic)
@@ -289,6 +290,7 @@ class ChartController
                 $profileLink = sprintf(
                     $profileTpl,
                     Url::to('usermanager.user.show', ['id' => $member->id]),
+                    $styleTpl,
                     $member->first_name . ' ' . $member->last_name,
                     $member->profile_pic
                     ? Asset::resolvePath('img/profile/' . $member->profile_pic)
