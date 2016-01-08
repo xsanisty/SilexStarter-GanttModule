@@ -110,7 +110,7 @@ class TaskController
 
             /* if is author, or user has permission to edit task */
             if ($this->user->hasAccess('admin') || $chart->author_id == $this->user->getId() || $permissions['gantt.task.edit'] == 1) {
-                $task = Request::except('id');
+                $task = Request::except(['id', 'target']);
 
                 if (isset($task['parent'])) {
                     $task['parent'] = $task['parent'] == 0 ? null : $task['parent'];
