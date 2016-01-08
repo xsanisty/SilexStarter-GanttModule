@@ -270,7 +270,6 @@ class ChartController
             $membersLink= '';
             $isAuthor   = $user->getId() == $row->author->id;
             $permissions= [
-                'gantt.chart.edit'  => false,
                 'gantt.chart.delete'=> false,
                 'gantt.chart.edit'  => false,
             ];
