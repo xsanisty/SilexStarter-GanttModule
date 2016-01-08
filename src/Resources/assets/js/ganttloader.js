@@ -39,7 +39,7 @@ function setScale(scale) {
             gantt.config.scale_unit = "month";
             gantt.config.date_scale = "%F, %Y";
             gantt.config.scale_height = 50;
-            gantt.config.min_column_width = 15;
+            gantt.config.min_column_width = 20;
 
             gantt.config.subscales = [
                 {unit:"day", step:1, date:"%j" }
@@ -218,8 +218,28 @@ $('#btn-chart-save').click(function(e){
 });
 
 $('#invite-user-email').select2({
-    tags: true,
-    tokenSeparators: [',']
+    ajax: {
+        url: global.searchUserUrl,
+        dataType: 'json',
+        delay: 250,
+        data: function (params) {
+            return {
+                keyword : params.term,
+                page : params.page
+            };
+        },
+        processResults: function (data, params) {
+            params.page = params.page || 1;
+
+            return {
+                results: data.items,
+                pagination: {
+                    more: (params.page * 30) < data.total_count
+                }
+            };
+        },
+        cache: true
+    },
 });
 
 $('#btn-chart-invite').click(function(e){
@@ -285,9 +305,11 @@ var dp = new gantt.dataProcessor(global.ganttApi);
 dp.init(gantt);
 dp.setTransactionMode("REST");
 
-$(window, ".wrapper").resize(function () {
-    var wrapperHeight = parseFloat($('.content-wrapper').css('min-height')) - parseFloat($('.content-header').height());
-    $('#gantt-container').css('height', wrapperHeight - 150);
+$(window).resize(function () {
+    var wrapperHeight = $(window).height()
+                        - parseFloat($('.content-header').height())
+                        - parseFloat($('.main-header').height());
+    $('#gantt-container').css('height', wrapperHeight - 120);
 
     gantt.render();
 }).resize();
